@@ -1,0 +1,40 @@
+[package]
+name = "fastrlp"
+version = "0.2.2"
+edition = "2021"
+license = "MPL-2.0"
+description = "Fast RLP serialization library"
+repository = "https://github.com/vorot93/fastrlp"
+
+[dependencies]
+arrayvec = { version = "0.7", default-features = false }
+auto_impl = "1"
+bytes = { version = "1", default-features = false }
+ethnum = { version = "1", default-features = false, optional = true }
+ethereum-types = { version = "0.13", default-features = false, optional = true }
+fastrlp-derive = { version = "0.1", path = "fastrlp-derive", optional = true }
+thiserror = { version = "1", default-features = false, optional = true }
+
+[dev-dependencies]
+fastrlp-test = { path = ".", package = "fastrlp", features = [
+    "derive",
+    "std",
+    "ethnum",
+    "ethereum-types",
+    "handle-thiserror"
+] }
+criterion = "0.4"
+hex-literal = "0.3"
+
+[features]
+alloc = []
+derive = ["fastrlp-derive"]
+std = ["alloc"]
+handle-thiserror = ["std", "thiserror"]
+
+[[bench]]
+name = "bench"
+harness = false
+
+[workspace]
+members = ["fastrlp-derive"]
